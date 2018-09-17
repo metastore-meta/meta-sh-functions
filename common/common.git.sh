@@ -54,25 +54,23 @@ function git.push.all() {
 # -------------------------------------------------------------------------------------------------------------------- #
 
 function git.push.version() {
-	if [ -z "${1}" ]; then
-		ver="1.0.$( ext.build.version )"
+	tag_list=$( git tag --list )
+
+	if [[ -z "${1}" ]]; then
+		if [[ -z "${tag_list}" ]]; then
+			version="1.0.0"
+		else
+			tag=( $( git describe --abbrev=0 --tags | tr '.' ' ' ) )
+			major=${tag[1]}
+			minor=${tag[2]}
+			patch=${tag[3]}
+			version="${major}.${minor}.$(( ${patch} + 1 ))"
+		fi
 	else
-		ver="${1}.$( ext.build.version )"
+		version="${1}"
 	fi
 
-	git.push && git tag -a ${ver} -m "Version ${ver}" && git push origin ${ver}
-}
-
-function git.push.version.test() {
-	tag=( $( git describe --abbrev=0 --tags | tr '.' ' ' ) )
-	major=${tag[1]}
-	minor=${tag[2]}
-	patch=${tag[3]}
-	version="${major}.${minor}.$(( ${patch} + 1 ))+$( ext.build.version )"
-
-	#git.push && git tag -a ${version} -m "Version ${version}" && git push origin ${version}
-
-	echo ${version}
+	git.push && git tag -a ${version} -m "Version ${version}" && git push origin ${version}
 }
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -80,7 +78,7 @@ function git.push.version.test() {
 # -------------------------------------------------------------------------------------------------------------------- #
 
 function git.push.page() {
-	if [ -z "${1}" ]; then
+	if [[ -z "${1}" ]]; then
 		branch="page-stable"
 	else
 		branch="${1}"
