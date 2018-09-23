@@ -41,7 +41,7 @@ function git.push() {
 
 function git.push.all() {
 	for i in `ls`; do
-		if [ -d ${i}/.git ]; then
+		if [[ -d ${i}/.git ]]; then
 			cd ${i}
 			git.push
 			cd ..
@@ -54,17 +54,24 @@ function git.push.all() {
 # -------------------------------------------------------------------------------------------------------------------- #
 
 function git.push.version() {
-	tag_list=$( git tag --list )
+	tags="$( git tag --list )"
+	changes="$(git status --porcelain)"
+
+	if [[ -z "${changes}" ]]; then
+		count="0"
+	else
+		count="1"
+	fi
 
 	if [[ -z "${1}" ]]; then
-		if [[ -z "${tag_list}" ]]; then
+		if [[ -z "${tags}" ]]; then
 			version="1.0.0"
 		else
 			tag=( $( git describe --abbrev=0 --tags | tr '.' ' ' ) )
 			major=${tag[1]}
 			minor=${tag[2]}
 			patch=${tag[3]}
-			version="${major}.${minor}.$(( ${patch} + 1 ))"
+			version="${major}.${minor}.$(( ${patch} + ${count} ))"
 		fi
 	else
 		version="${1}"
