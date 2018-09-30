@@ -27,7 +27,7 @@ dit_remote=""
 # Script: Backup data.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-sshpass -p "${ssh_pass}" rsync -avze "ssh -p ${ssh_port}" ${ssh_user}@${ssh_host}:${dir_local} ${dit_remote}
+sshpass -p "${ssh_pass}" rsync -avze "ssh -p ${ssh_port}" ${ssh_user}@${ssh_host}:${dit_remote} ${dir_local}
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.
