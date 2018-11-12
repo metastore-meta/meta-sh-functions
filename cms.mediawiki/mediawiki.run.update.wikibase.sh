@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # -------------------------------------------------------------------------------------------------------------------- #
-# MediaWiki. Run Jobs.
+# MediaWiki. Database Update.
 # -------------------------------------------------------------------------------------------------------------------- #
 # @author Kitsune Solar <https://kitsune.solar>
 # @version 1.0.0
@@ -21,15 +21,13 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 # Script: Update.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-function mw.run.jobs() {
+function mw.run.update.wikibase() {
 	for domain in ${domains[@]}; do
 		HTTP_HOST="${domain}"
 		export HTTP_HOST
-		/usr/bin/php "${mw_path}/maintenance/runJobs.php"
+		/usr/bin/php "${mw_path}/extensions/Wikibase/${1}/maintenance/${2}.php"
 	done
 }
-
-mw.run.jobs
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.

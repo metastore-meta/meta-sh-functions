@@ -21,17 +21,28 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 # Script: Run search index.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-for domain in ${domains[@]}; do
-	HTTP_HOST="${domain}"
-	export HTTP_HOST
-	/usr/bin/php "${mw_path}/extensions/CirrusSearch/maintenance/forceSearchIndex.php" --skipLinks --indexOnSkip
-done
+function mw.run.forceSearchIndex.01() {
+	for domain in ${domains[@]}; do
+		echo "--- ${domain}"
+		HTTP_HOST="${domain}"
+		export HTTP_HOST
+		/usr/bin/php "${mw_path}/extensions/CirrusSearch/maintenance/forceSearchIndex.php" --skipLinks --indexOnSkip
+		echo ""
+	done
+}
 
-for domain in ${domains[@]}; do
-	HTTP_HOST="${domain}"
-	export HTTP_HOST
-	/usr/bin/php "${mw_path}/extensions/CirrusSearch/maintenance/forceSearchIndex.php" --skipParse
-done
+function mw.run.forceSearchIndex.02() {
+	for domain in ${domains[@]}; do
+		echo "--- ${domain}"
+		HTTP_HOST="${domain}"
+		export HTTP_HOST
+		/usr/bin/php "${mw_path}/extensions/CirrusSearch/maintenance/forceSearchIndex.php" --skipParse
+		echo ""
+	done
+}
+
+mw.run.forceSearchIndex.01
+mw.run.forceSearchIndex.02
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.

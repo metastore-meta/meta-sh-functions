@@ -13,7 +13,35 @@
 
 cmd=""
 
-source "${HOME}/.apps/mediawiki.settings.sh"
+domains=(
+	# common projects
+	'furlib.com'
+	'furs.games'
+	'furs.news'
+	'furs.today'
+	'fursona.info'
+	'kitsune.solar'
+	'lurkfur.com'
+	'metadata.foundation'
+	'metastore.pro'
+	'radio.wtf'
+	# *.webmasters.wiki
+	'flarum.webmasters.wiki'
+	'humhub.webmasters.wiki'
+	'ips.webmasters.wiki'
+	'xenforo.webmasters.wiki'
+	# *.furs.wiki
+	'blacklist.furs.wiki'
+	'craft.furs.wiki'
+	'event.furs.wiki'
+	'person.furs.wiki'
+	'web.furs.wiki'
+	'whitelist.furs.wiki'
+	# *.metadata.cloud
+	'accounts.metadata.cloud'
+	'help.metadata.cloud'
+	'storage.metadata.cloud'
+)
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # -----------------------------------------------------< SCRIPT >----------------------------------------------------- #
@@ -26,7 +54,7 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 for domain in ${domains[@]}; do
 	HTTP_HOST="${domain}"
 	export HTTP_HOST
-	/usr/bin/php "${mw_path}/maintenance/${cmd}.php"
+	/usr/bin/php "${HOME}/subdomain/wiki.common/public_html/extensions/Wikibase/lib/maintenance/populateSitesTable.php"
 done
 
 # -------------------------------------------------------------------------------------------------------------------- #

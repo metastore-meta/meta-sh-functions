@@ -93,3 +93,17 @@ function git.push.page() {
 
 	git.push && git checkout master && git merge ${branch} && git push && git checkout ${branch}
 }
+
+# -------------------------------------------------------------------------------------------------------------------- #
+# Git: Push CDN.
+# -------------------------------------------------------------------------------------------------------------------- #
+
+function git.push.cdn() {
+	if [[ -z "${1}" ]]; then
+		branch="cdn-stable"
+	else
+		branch="${1}"
+	fi
+
+	git.push && git checkout master && git merge ${branch} && git push && git checkout ${branch}
+}

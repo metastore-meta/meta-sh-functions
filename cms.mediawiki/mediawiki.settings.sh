@@ -10,25 +10,32 @@
 # -------------------------------------------------------------------------------------------------------------------- #
 
 domains=(
-	'flarum.help'
+	# common projects
 	'furlib.com'
 	'furs.games'
 	'furs.news'
 	'furs.today'
 	'fursona.info'
-	'humhub.help'
-	'ipb.help'
 	'kitsune.solar'
 	'lurkfur.com'
 	'metadata.foundation'
 	'metastore.pro'
 	'radio.wtf'
-	'xenforo.help'
+	# *.webmasters.wiki
+	'flarum.webmasters.wiki'
+	'humhub.webmasters.wiki'
+	'ips.webmasters.wiki'
+	'xenforo.webmasters.wiki'
+	# *.furs.wiki
+	'blacklist.furs.wiki'
 	'craft.furs.wiki'
 	'event.furs.wiki'
 	'person.furs.wiki'
 	'web.furs.wiki'
+	'whitelist.furs.wiki'
+	# *.metadata.cloud
 	'accounts.metadata.cloud'
+	'base.metadata.cloud'
 	'help.metadata.cloud'
 	'storage.metadata.cloud'
 )
@@ -44,7 +51,7 @@ extensions=(
 	'Echo'
 	'Elastica'
 	'FlaggedRevs'
-	'intersection'
+	'GlobalUsage'
 	'Kartographer'
 	'MobileFrontend'
 	'PageImages'
@@ -59,6 +66,8 @@ extensions=(
 	'UploadWizard'
 	'UserMerge'
 	'VipsScaler'
+	'SubPageList3'
+	'Wikibase'
 )
 
 mw_path="${HOME}/subdomain/wiki.common/public_html"

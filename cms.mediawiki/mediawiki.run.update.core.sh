@@ -21,11 +21,15 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 # Script: Update.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-for domain in ${domains[@]}; do
-	HTTP_HOST="${domain}"
-	export HTTP_HOST
-	/usr/bin/php "${mw_path}/maintenance/update.php" --quick
-done
+function mw.run.update.core() {
+	for domain in ${domains[@]}; do
+		HTTP_HOST="${domain}"
+		export HTTP_HOST
+		/usr/bin/php "${mw_path}/maintenance/update.php" --quick --skip-external-dependencies
+	done
+}
+
+mw.run.update.core
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.

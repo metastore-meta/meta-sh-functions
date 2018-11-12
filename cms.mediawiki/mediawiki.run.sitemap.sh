@@ -21,15 +21,19 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 # Script: Sitemap Generation.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-for domain in ${domains[@]}; do
-	HTTP_HOST="${domain}"
-	export HTTP_HOST
-	/usr/bin/php "${mw_path}/maintenance/generateSitemap.php"  	\
-	--fspath "${mw_path}/ext-sitemap"								\
-	--identifier="${domain}"										\
-	--urlpath="https://${domain}/ext-sitemap"						\
-	--server="https://${domain}"
-done
+function mw.run.generateSitemap() {
+	for domain in ${domains[@]}; do
+		HTTP_HOST="${domain}"
+		export HTTP_HOST
+		/usr/bin/php "${mw_path}/maintenance/generateSitemap.php"  	\
+		--fspath "${mw_path}/ext-sitemap"								\
+		--identifier="${domain}"										\
+		--urlpath="https://${domain}/ext-sitemap"						\
+		--server="https://${domain}"
+	done
+}
+
+mw.run.generateSitemap
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.

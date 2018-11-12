@@ -21,11 +21,15 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 # Script: Run search index.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-for domain in ${domains[@]}; do
-	HTTP_HOST="${domain}"
-	export HTTP_HOST
-	/usr/bin/php "${mw_path}/extensions/CirrusSearch/maintenance/updateSearchIndexConfig.php"
-done
+function mw.run.updateSearchIndexConfig() {
+	for domain in ${domains[@]}; do
+		HTTP_HOST="${domain}"
+		export HTTP_HOST
+		/usr/bin/php "${mw_path}/extensions/CirrusSearch/maintenance/updateSearchIndexConfig.php"
+	done
+}
+
+mw.run.updateSearchIndexConfig
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.

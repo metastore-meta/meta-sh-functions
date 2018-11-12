@@ -21,11 +21,15 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 # Script: Update.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-for domain in ${domains[@]}; do
-	HTTP_HOST="${domain}"
-	export HTTP_HOST
-	/usr/bin/php "${mw_path}/extensions/FlaggedRevs/maintenance/updateStats.php"
-done
+function mw.run.updateStats() {
+	for domain in ${domains[@]}; do
+		HTTP_HOST="${domain}"
+		export HTTP_HOST
+		/usr/bin/php "${mw_path}/extensions/FlaggedRevs/maintenance/updateStats.php"
+	done
+}
+
+mw.run.updateStats
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.

@@ -21,12 +21,16 @@ source "${HOME}/.apps/mediawiki.settings.sh"
 # Script: Update.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-cd "${mw_path_ext}"
+function mw.run.update.extensions() {
+	cd "${mw_path_ext}"
 
-for extension in ${extensions[@]}; do
-	rm -rf "${extension}"
-	git clone -b "${git_branch}" "${git_url}/${extension}.git"
-done
+	for extension in ${extensions[@]}; do
+		rm -rf "${extension}"
+		git clone -b "${git_branch}" "${git_url}/${extension}.git"
+	done
+}
+
+mw.run.update.extensions
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.

@@ -18,46 +18,42 @@ source "${HOME}/.apps/server.run.project.db.backup.config.sh"
 # -------------------------------------------------------------------------------------------------------------------- #
 
 # -------------------------------------------------------------------------------------------------------------------- #
-# Script: Create backup directories.
-# -------------------------------------------------------------------------------------------------------------------- #
-
-mkdir -p "${path}/${timestamp}" && cd "${path}/${timestamp}/"
-
-# -------------------------------------------------------------------------------------------------------------------- #
 # Script: Backup databases.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-for database in ${databases[@]}; do
-	echo ""
-	echo "--- Backup database: ${database}..."
+function ext.run.backup.database() {
+	# Create backup directories.
+	mkdir -p "${path}/${timestamp}" && cd "${path}/${timestamp}/"
 
-	# Backup database.
-	mysqldump -u "${db_user}" -p"${db_password}" -h"127.0.0.1" --opt ${database} > "${database}.${timestamp}.sql"
+	# Backup databases.
+	for database in ${databases[@]}; do
+		echo ""
+		echo "--- Backup database: ${database}..."
 
-	# Archiving database.
-	if [[ -f "${database}.${timestamp}.sql" ]]; then
-		tar -cJf "${database}.${timestamp}.sql.tar.xz" "${database}.${timestamp}.sql"
-	fi
+		# Backup database.
+		mysqldump -u "${db_user}" -p"${db_password}" -h"127.0.0.1" --opt ${database} > "${database}.${timestamp}.sql"
 
-	# Print "done" phrase.
-	echo "--- Backup database: ${database} - complete!"
-	echo ""
+		# Archiving database.
+		if [[ -f "${database}.${timestamp}.sql" ]]; then
+			tar -cJf "${database}.${timestamp}.sql.tar.xz" "${database}.${timestamp}.sql"
+		fi
 
-	# Sleep.
-	sleep ${sleep}
-done
+		# Print "done" phrase.
+		echo "--- Backup database: ${database} - complete!"
+		echo ""
 
-# -------------------------------------------------------------------------------------------------------------------- #
-# Script: Remove *.sql.
-# -------------------------------------------------------------------------------------------------------------------- #
+		# Sleep.
+		sleep ${sleep}
+	done
 
-rm -f *.sql
+	# Remove *.sql.
+	rm -f *.sql
 
-# -------------------------------------------------------------------------------------------------------------------- #
-# Script: Email report.
-# -------------------------------------------------------------------------------------------------------------------- #
+	# Email report.
+	echo "$( ls -1hs )" | mailx -s "SRV-01: Backup Database" "${mail_to}"
+}
 
-echo "$( ls -1hs )" | mailx -s "SRV-01: Backup Database" "${mail_to}"
+ext.run.backup.database
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Script: Exit.
